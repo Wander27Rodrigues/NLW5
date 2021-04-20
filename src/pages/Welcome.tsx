@@ -1,37 +1,51 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import { SafeAreaView, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 
-import watering from '../assets/watering.png';
+import wateringImg from '../assets/watering.png';
 import colors from '../styles/colors';
-export function Welcome () {
-    return (
-        
+import { Button } from '../components/Button';
+
+
+export function Welcome(){
+    const [visible, setVisible] = useState(false);
+
+    function handleVisible(){
+        setVisible(true);
+    }
+    
+    return(
+  
         <SafeAreaView style={styles.container}>
             <Text style={styles.title}>
-            Gerencie suas plantas de forma fácil
-
+            Gerencie {'\n'}
+            suas plantas {'\n'}
+            de forma fácil
             </Text>
-
-            <Image source={wateringImg} style={styles.image} />
+            
+           {  
+                visible &&
+                <Image source={wateringImg} style={styles.image} />
+           
+           }
 
             <Text style={styles.subtitle}>
                 Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar você sempre que precisar.
             </Text>
 
-            <TouchableOpacity style={styles.button}>
-                <Text>
-                    >
-                </Text>
-            </TouchableOpacity>
+            <Button title=">" />
+            
+            
         </SafeAreaView>
+    
     )
 }
 
+// styles de component
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'space-between'
     },
     title: {
         fontSize:32,
@@ -40,23 +54,14 @@ const styles = StyleSheet.create({
         color: colors.heading,
         marginTop: 38
     },
-
     subtitle: {
         textAlign: 'center',
         fontSize: 18,
         paddingHorizontal: 20,
         color: colors.heading
     },
-
-    button: {
-        backgroundColor: colors.green,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 16,
-        marginBottom:10,
-        height:56,
-        width:56,
-    },
-    
-
+    image: {
+        width:292,
+        height:284,
+    }    
 })
