@@ -1,39 +1,42 @@
 import React from 'react';
 import{ 
     SafeAreaView, 
-    Text, 
+    Text,
     Image, 
     TouchableOpacity, 
     StyleSheet,
     Dimensions,
+    View,
 } from 'react-native';
+// import icons
+import { Feather } from '@expo/vector-icons';
 
 import wateringImg from '../assets/watering.png';
 import colors from '../styles/colors';
-// import icons
-import { Feather } from '@expo/vector-icons';
+import fonts from '../styles/fonts';
+
+
 
 
 export function Welcome(){
     return(
   
         <SafeAreaView style={styles.container}>
+            
+            <View style={styles.wrapper}>
             <Text style={styles.title}>
             Gerencie {'\n'}
-            suas plantas {'\n'}
-            de forma fácil
+            suas plantas de {'\n'}
+            forma fácil
             </Text>
-            
-          
+                      
             <Image 
                 source={wateringImg}   
                 style={styles.image}
                 // reponsividade de img 
                 resizeMode='contain'
             />
-           
-           
-
+                      
             <Text style={styles.subtitle}>
                 Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar você sempre que precisar.
             </Text>
@@ -42,17 +45,14 @@ export function Welcome(){
                 style={ styles.button}
                 activeOpacity={0.7}
             >
-                {/* utilizando icons */}
-                <Text style={styles.buttonText}>
-                    
+                {/* utilizando icons */}                 
                     <Feather 
                         name="chevron-right" 
                         style={styles.buttonIcon}
-                    />
-                </Text>
+                    />                
         </TouchableOpacity>
             
-            
+        </View>
         </SafeAreaView>
     
     )
@@ -62,23 +62,31 @@ const styles = StyleSheet.create({
     
     container: {
         flex: 1,
+    },
+
+    wrapper:{
+        flex: 1,
         alignItems: 'center',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        paddingHorizontal: 20,
     },
 
     title: {
-        fontSize:32,
+        fontSize: 28,
         fontWeight:'bold',
         textAlign: 'center',
         color: colors.heading,
-        marginTop: 38
+        marginTop: 38,
+        fontFamily: fonts.heading,
+        lineHeight: 34
     },
 
     subtitle: {
         textAlign: 'center',
         fontSize: 18,
         paddingHorizontal: 20,
-        color: colors.heading
+        color: colors.heading,
+        fontFamily: fonts.text
     },
 
     image: {
