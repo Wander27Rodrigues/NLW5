@@ -3,14 +3,15 @@ import {
     View,
     Text,
     Image,
-    StyleSheet, 
+    StyleSheet,
+    FlatList,
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 
 import colors from '../styles/colors';
-import userImg from '../assets/wander.png';
 import fonts from '../styles/fonts';
+
 
 
 
@@ -19,10 +20,12 @@ export function Header(){
         <View style={styles.container}>
             <View>
                 <Text style={styles.greeting}>Olá</Text>
-                <Text style={styles.userName}>Wnader</Text>
+                <Text style={styles.userName}>Wander</Text>
             </View>
 
-            <Image source={userImg} style={styles.image} />
+            <Image source={{uri:
+            'https://avatars.githubusercontent.com/u/48796830?v=4'
+            }} style={styles.image} />
 
         </View>
     )
@@ -35,7 +38,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingVertical: '20',
-        backgroundColor: colors.red,
         marginTop: getStatusBarHeight(),
         
     },
