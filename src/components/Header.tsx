@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
-
+import avatar from '../assets/avatar.png'
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
@@ -23,9 +23,7 @@ export function Header(){
                 <Text style={styles.userName}>Wander</Text>
             </View>
 
-            <Image source={{uri:
-            'https://avatars.githubusercontent.com/u/48796830?v=4'
-            }} style={styles.image} />
+            <Image source={avatar} style={styles.image} />
 
         </View>
     )
