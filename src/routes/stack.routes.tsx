@@ -5,38 +5,35 @@ import { Welcome } from '../pages/Welcome';
 import { UserIdentification } from '../pages/UsesIdentifications';
 import { Confirmation } from '../pages/Confirmation';
 
-import colors from '../styles/colors';
-import fonts from '../styles/fonts';
-import App from '../../App';
 
+import colors from '../styles/colors';
 const stackRoutes = createStackNavigator();
 
 const AppRoutes: React.FC = () => (
-    <stackRoutes.Navigator
-    hearderMode="none"
+  <stackRoutes.Navigator
+    headerMode="none"
     screenOptions={{
-        cardStyle: {
-            backgroundColor: colors.white
-        },
+      cardStyle: {
+        backgroundColor: colors.white
+      }
     }}
-    >
-
-    <stackRoutes.Screen
+  >
+   <stackRoutes.Screen
     name="Welcome"
     component={Welcome}
-    />
+   />
 
-    <stackRoutes.Screen
-    name="User"
+  <stackRoutes.Screen
+    name="UserIdentification"
     component={UserIdentification}
-    />
+   /> 
 
-    <stackRoutes.Screen
+  <stackRoutes.Screen
     name="Confirmation"
     component={Confirmation}
-    />
+   />
 
-    </stackRoutes.Navigator>
+  </stackRoutes.Navigator>
 )
-    
+
 export default AppRoutes;
