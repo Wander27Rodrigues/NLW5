@@ -92,28 +92,34 @@ export function UserIdentification() {
 }
 
 const styles = StyleSheet.create({
+  
   container: {
     flex: 1,
     width: '100%',
     justifyContent: 'space-around',
     alignItems: 'center'
   }, 
+
   content: {
     flex: 1,
     width: '100%'
   },
+
   form: {
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 54,
     alignItems: 'center'
   },
+
   header: {
     alignItems: 'center'
   },
+
   emoji: {
     fontSize: 44
   },
+
   input: {
     borderBottomWidth: 1,
     borderColor: colors.gray,
@@ -124,6 +130,7 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: 'center'
   }, 
+
   title: {
     fontSize: 24,
     lineHeight: 32,
@@ -132,6 +139,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.heading,
     marginTop: 20
   },
+
   footer: {
     width: '100%',
     marginTop: 40,
