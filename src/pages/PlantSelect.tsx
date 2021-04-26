@@ -11,7 +11,7 @@ import {
  import { Header } from '../components/Header';
  import { EnvironmentButton } from '../components/EnvironmentButton';
  import { PlantCardPrimary } from '../components/PlantCardPrimary';
-
+ import { Load } from '../components/Load';
 
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
@@ -41,16 +41,36 @@ interface PlantProps {
 export function PlantSelect (){
     const [environments, setEnvironments] = useState<EnvironmentProps[]>([]);
     const [plants, setPlants] = useState<PlantProps[]>([]);
+    const [filteredPlants, setFliteredPlants] = useState<PlantProps[]>([]);
     const [environmentSelect, setEnvironmentSelect] = useState('all');
+    const [loading, setLoading] = useState(true);
     
+    // carregamaneto de pagina em api
+
+    const [page, setPage] = useState(1);
+    const [loadingMore, setLoadinMore] = useState(false);
+    const [loadingAll, setLoadinAll] = useState(false);
+    
+// filtro
 function handleEnrivomentSelect(environment: string){
     setEnvironmentSelect(environment);
+
+    if(environment == 'all')
+        return setFliteredPlants(plants);
+
+    const filtered = plants.filter(plant =>
+            plant.environments.includes(environment)
+        );
+
+        setFliteredPlants(filtered);
+
+
 }
 
     useEffect(() => {
         async function fetchEnvironments() {
             const { data } = await api
-            .get('plants_environments?_sort=title&_order=asc');
+            .get(`plants_environments?_sort=title&_order=asc`);
             setEnvironments([
                 {
                     key: 'all',
@@ -64,15 +84,24 @@ function handleEnrivomentSelect(environment: string){
         },[])
 
         useEffect(() => {
-            async function fetchPlants() {
+            async function fetchPlants(){
                 const { data } = await api
-                .get('plants?_sort=name&_order=asc');
+                .get(`plants?_sort=name&_order=asc&_page=${page}&_limit=8`);
+                
+                if(!data)
+                return setLoading(true);
+
+                if
                 setPlants(data);
+                setFliteredPlants(data);
+                setLoading(false)
             }
-            fetchPlants();
-    
+                fetchPlants();    
             },[])
     
+    // load animation
+    if(loading)
+            return <Load/>
     return(
         <View 
             style={styles.container}
@@ -108,7 +137,7 @@ function handleEnrivomentSelect(environment: string){
 
             <View style={styles.plants}>
                 <FlatList
-                    data={plants}
+                    data={filteredPlants}
                     renderItem={( {item}) => (
                         <PlantCardPrimary data={item}/>
                     )}
