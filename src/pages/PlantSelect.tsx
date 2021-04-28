@@ -4,7 +4,8 @@ import {
     View,
     Text,
     StyleSheet,
-    FlatList
+    FlatList,
+    ActivityIndicator
  } from 'react-native';
  
 
@@ -63,8 +64,24 @@ function handleEnrivomentSelect(environment: string){
         );
 
         setFliteredPlants(filtered);
+}
 
+async function fetchPlants(){
+    const { data } = await api
+    .get(`plants?_sort=name&_order=asc&_page=${page}&_limit=8`);
+    
+    if(!data)
+        return setLoading(true);
 
+    if(page > 1){
+        setPlants(oldValue => [...oldValue, ...data])
+        setFliteredPlants(oldValue => [...oldValue, ...data])
+    } else {
+        setPlants(data);
+        setFliteredPlants(data);
+    }
+    setLoading(false);
+    setLoadinMore(false); 
 }
 
     useEffect(() => {
@@ -82,21 +99,19 @@ function handleEnrivomentSelect(environment: string){
         fetchEnvironments();
 
         },[])
+function handleFetchMOre(distance: number){
+    if(distance < 1)
+        return;
+
+    setLoadinMore(true);
+    setPage(oldValue => oldValue + 1);
+    fetchPlants();
+}
 
         useEffect(() => {
-            async function fetchPlants(){
-                const { data } = await api
-                .get(`plants?_sort=name&_order=asc&_page=${page}&_limit=8`);
-                
-                if(!data)
-                return setLoading(true);
-
-                if
-                setPlants(data);
-                setFliteredPlants(data);
-                setLoading(false)
-            }
-                fetchPlants();    
+            
+            
+            fetchPlants();    
             },[])
     
     // load animation
@@ -142,7 +157,16 @@ function handleEnrivomentSelect(environment: string){
                         <PlantCardPrimary data={item}/>
                     )}
                     showsHorizontalScrollIndicator={false}
-                    numColumns={2}                    
+                    numColumns={2}   
+                    onEndReachedThreshold={0.1}               
+                    onEndReached={({ distanceFromEnd }) => 
+                        handleFetchMOre(distanceFromEnd)
+                    } 
+                    ListFooterComponent={
+                        loadingMore
+                        ? <ActivityIndicator color={colors.green}/>
+                        : <></>
+                    }
                     />
                     
 
