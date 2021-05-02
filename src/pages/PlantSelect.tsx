@@ -50,7 +50,7 @@ export function PlantSelect (){
 
     const [page, setPage] = useState(1);
     const [loadingMore, setLoadinMore] = useState(false);
-    const [loadingAll, setLoadinAll] = useState(false);
+    
     
 // filtro
 function handleEnrivomentSelect(environment: string){
@@ -136,6 +136,7 @@ function handleFetchMOre(distance: number){
             <View>
                 <FlatList
                 data={environments}
+                keyExtractor={(item) => String(item.key)}
                 renderItem={({ item }) => (
                     <EnvironmentButton 
                     title={item.title} 
@@ -153,6 +154,7 @@ function handleFetchMOre(distance: number){
             <View style={styles.plants}>
                 <FlatList
                     data={filteredPlants}
+                    keyExtractor={(item) =>String(item.id)}
                     renderItem={( {item}) => (
                         <PlantCardPrimary data={item}/>
                     )}
