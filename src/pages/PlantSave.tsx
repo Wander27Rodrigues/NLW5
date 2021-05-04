@@ -47,12 +47,12 @@ export function PlantSave(){
                     style={styles.tipImage}
                 />
 
-                <Text style={StyleSheet.tipText}>
+                <Text style={styles.tipText}>
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 </Text>
             </View>
 
-            <Text >
+            <Text style={styles.alertLabel}>
                 Escolha o melhor horário para ser lembrado:
             </Text>
 
@@ -110,7 +110,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: colors.blue_light,
-        padding: 20
+        padding: 20,
+        borderRadius: 20,
+        position: 'relative',
+        bottom: 60,
     },
 
     tipImage: {
@@ -127,6 +130,11 @@ const styles = StyleSheet.create({
         textAlign: 'justify',
     },
 
-    
-
+    alertLabel: {
+        textAlign: 'center',
+        fontFamily: fonts.complement,
+        color: colors.heading,
+        fontSize: 12,
+        marginBottom: 5
+    }
 });
