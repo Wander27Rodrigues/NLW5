@@ -13,10 +13,13 @@ import {
  import { EnvironmentButton } from '../components/EnvironmentButton';
  import { PlantCardPrimary } from '../components/PlantCardPrimary';
  import { Load } from '../components/Load';
+ import { useNavigation } from '@react-navigation/native';
+ 
+ 
+ import colors from '../styles/colors';
+ import fonts from '../styles/fonts';
+ import api from '../services/api';
 
-import colors from '../styles/colors';
-import fonts from '../styles/fonts';
-import api from '../services/api';
 
 
 
@@ -51,6 +54,7 @@ export function PlantSelect (){
     const [page, setPage] = useState(1);
     const [loadingMore, setLoadinMore] = useState(false);
     
+    const navigation = useNavigation();
     
 // filtro
 function handleEnrivomentSelect(environment: string){
@@ -64,6 +68,20 @@ function handleEnrivomentSelect(environment: string){
         );
 
         setFliteredPlants(filtered);
+}
+
+//plantSelect
+function handlePlantSelect(plant: PlantProps){
+    navigation.navigate('PlantSave');
+}
+
+function handleFetchMore(distance: number){
+    if(distance < 1)
+        return;
+
+    setLoadinMore(true);
+    setPage(oldValue => oldValue + 1);
+    fetchPlants();
 }
 
 async function fetchPlants(){
@@ -99,14 +117,6 @@ async function fetchPlants(){
         fetchEnvironments();
 
         },[])
-function handleFetchMOre(distance: number){
-    if(distance < 1)
-        return;
-
-    setLoadinMore(true);
-    setPage(oldValue => oldValue + 1);
-    fetchPlants();
-}
 
         useEffect(() => {
             
@@ -156,13 +166,17 @@ function handleFetchMOre(distance: number){
                     data={filteredPlants}
                     keyExtractor={(item) =>String(item.id)}
                     renderItem={( {item}) => (
-                        <PlantCardPrimary data={item}/>
+                        <PlantCardPrimary 
+                            data={item}
+                            onPress={() => handlePlantSelect(item)}
+
+                        />
                     )}
                     showsHorizontalScrollIndicator={false}
                     numColumns={2}   
                     onEndReachedThreshold={0.1}               
                     onEndReached={({ distanceFromEnd }) => 
-                        handleFetchMOre(distanceFromEnd)
+                        handleFetchMore(distanceFromEnd)
                     } 
                     ListFooterComponent={
                         loadingMore
