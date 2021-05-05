@@ -72,7 +72,7 @@ function handleEnrivomentSelect(environment: string){
 
 //plantSelect
 function handlePlantSelect(plant: PlantProps){
-    navigation.navigate('PlantSave');
+    navigation.navigate('PlantSave', { plant });
 }
 
 function handleFetchMore(distance: number){
