@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
     View,
     Alert,
@@ -18,29 +18,54 @@ import { useRoute } from '@react-navigation/core';
 import { color } from 'react-native-reanimated';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
+
+interface Params {
+    plant: {
+        id: string;
+        name: string;
+        about: string; 
+        water_tips: string;
+        photo: string;
+        environments: [string];
+        frequency: {
+        times: number;
+        repeat_every: string;
+        }
+    }
+}
 
 export function PlantSave(){
 
+    const [selectedDateTime, setSelectedDatetime] = useState(new Date());
+    const [showDatePicker, setShowDatePicker] = useState(Platform.OS == 'ios');
+
     const route = useRoute();
     const { plant } = route.params as Params;
+
+    function handleChangeTime(event: Event, dateTime: Date | undefined){
+        if(Platform.OS === 'android'){
+            setSelectedDatetime(oldState => !oldState);
+        }
+    }
 
     return(
         <View style={styles.container}>
 
         <View style={styles.plantInfo}>
             <SvgFromUri 
-                uri=""
+                uri={plant.photo}
                 height={150}
                 width={150}
             />
 
 
             <Text style={styles.plantName}>
-                Nome da Planta
+                {plant.name}
             </Text>
 
             <Text style={styles.plantAbout}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, necessitatibus asperiores! In molestias illo laborum dolorum error blanditiis libero beatae facere praesentium? Quibusdam est in nemo natus aut, blanditiis cupiditate?
+                {plant.about}
             </Text>
         </View>
 
@@ -52,13 +77,21 @@ export function PlantSave(){
                 />
 
                 <Text style={styles.tipText}>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    {plant.water_tips}
                 </Text>
             </View>
 
             <Text style={styles.alertLabel}>
                 Escolha o melhor horário para ser lembrado:
             </Text>
+
+            <DateTimePicker
+                value={selectedDateTime}
+                mode="time"
+                display="spinner"
+                onChange={handleChangeTime}
+            />
+
 
             <Button 
                 title="Cadastrar planta"
