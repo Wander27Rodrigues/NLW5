@@ -19,6 +19,7 @@ import { color } from 'react-native-reanimated';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
+import { isBefore } from 'date-fns';
 
 interface Params {
     plant: {
@@ -45,8 +46,20 @@ export function PlantSave(){
 
     function handleChangeTime(event: Event, dateTime: Date | undefined){
         if(Platform.OS === 'android'){
-            setSelectedDatetime(oldState => !oldState);
+            setShowDatePicker(oldState => !oldState);
         }
+
+        if(dateTime && isBefore(dateTime,new Date())){
+            setSelectedDatetime(new Date());
+            return Alert.alert('Escolha uma data no futuro! ⏰');
+        }
+
+        if(dateTime)
+            setSelectedDatetime(dateTime);
+    }
+
+    function handleOpenDateTimePickerForAndroid(){
+        setShowDatePicker(oldState => !oldState);
     }
 
     return(
@@ -85,13 +98,29 @@ export function PlantSave(){
                 Escolha o melhor horário para ser lembrado:
             </Text>
 
-            <DateTimePicker
+            {
+                showDatePicker &&(
+                <DateTimePicker
                 value={selectedDateTime}
                 mode="time"
                 display="spinner"
                 onChange={handleChangeTime}
-            />
+                />
+            )}
 
+
+            {
+                Platform.OS === 'android' && (
+                    <TouchableOpacity 
+                    style={DateTimePickerButton}
+                    onPress={handleOpenDateTimePickerForAndroid}
+                    >
+                        <Text style={styles.dateTimePickerText}>
+                            Mudar
+                        </Text>
+                    </TouchableOpacity>
+                )
+            }
 
             <Button 
                 title="Cadastrar planta"
@@ -173,5 +202,17 @@ const styles = StyleSheet.create({
         color: colors.heading,
         fontSize: 12,
         marginBottom: 5
+    },
+    
+    DateTimePickerButton:{
+        width: '100%',
+        alignItems: 'center',
+        paddingVertical: 40,
+    },
+
+    dateTimePickerText: {
+        color: colors.heading,
+        fontSize: 24,
+        fontFamily: fonts.text,
     }
 });
