@@ -19,21 +19,11 @@ import { color } from 'react-native-reanimated';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
-import { isBefore } from 'date-fns';
+import { format, isBefore } from 'date-fns';
+import { PlantProps } from '../libs/storage';
 
 interface Params {
-    plant: {
-        id: string;
-        name: string;
-        about: string; 
-        water_tips: string;
-        photo: string;
-        environments: [string];
-        frequency: {
-        times: number;
-        repeat_every: string;
-        }
-    }
+    plant: PlantProps
 }
 
 export function PlantSave(){
@@ -112,11 +102,11 @@ export function PlantSave(){
             {
                 Platform.OS === 'android' && (
                     <TouchableOpacity 
-                    style={DateTimePickerButton}
+                    style={styles.dateTimePickerButton}
                     onPress={handleOpenDateTimePickerForAndroid}
                     >
                         <Text style={styles.dateTimePickerText}>
-                            Mudar
+                            {`Mudar ${format(selectedDateTime, 'HH:MM')}`}
                         </Text>
                     </TouchableOpacity>
                 )
@@ -204,7 +194,7 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     
-    DateTimePickerButton:{
+    dateTimePickerButton:{
         width: '100%',
         alignItems: 'center',
         paddingVertical: 40,

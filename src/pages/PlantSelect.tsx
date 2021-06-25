@@ -19,6 +19,7 @@ import {
  import colors from '../styles/colors';
  import fonts from '../styles/fonts';
  import api from '../services/api';
+import { PlantProps } from '../libs/storage';
 
 
 
@@ -29,18 +30,6 @@ interface EnvironmentProps {
     key: string;
 }
 
-interface PlantProps {
-    id: string;
-    name: string;
-    about: string;
-    water_tips: string;
-    photo: string;
-    environments: [string];
-    frequency: {
-      times: number;
-      repeat_every: string;     
-    }
-}
 
 export function PlantSelect (){
     const [environments, setEnvironments] = useState<EnvironmentProps[]>([]);
