@@ -14,13 +14,13 @@ import {SvgFromUri} from 'react-native-svg';
 import waterdrop from '../assets/waterdrop.png';
 import { Button } from '../components/Button';
 import { useRoute } from '@react-navigation/core';
+import { loadPlant, PlantProps, savePlant } from '../libs/storage';
+import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
+import { format, isBefore } from 'date-fns';
 
 import { color } from 'react-native-reanimated';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
-import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
-import { format, isBefore } from 'date-fns';
-import { PlantProps } from '../libs/storage';
 
 interface Params {
     plant: PlantProps
@@ -43,13 +43,24 @@ export function PlantSave(){
             setSelectedDatetime(new Date());
             return Alert.alert('Escolha uma data no futuro! ⏰');
         }
-
         if(dateTime)
             setSelectedDatetime(dateTime);
     }
 
     function handleOpenDateTimePickerForAndroid(){
         setShowDatePicker(oldState => !oldState);
+    }
+
+
+    async function handleSave () {
+           try  {
+            await savePlant ({
+                ...plant,
+                dateTimeNotification: selectedDateTime
+            });
+        } catch {
+            Alert.alert('Não foi possivel salvar. 😥');
+        }
     }
 
     return(
@@ -114,7 +125,7 @@ export function PlantSave(){
 
             <Button 
                 title="Cadastrar planta"
-                onPress={() => {}}
+                onPress={handleSave}
             />
         </View>
         </View>
