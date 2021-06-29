@@ -2,10 +2,11 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { Welcome } from '../pages/Welcome';
-import { UserIdentification } from '../pages/UsesIdentifications';
+import { UserIdentification } from '../pages/UserIdentifications';
 import { Confirmation } from '../pages/Confirmation';
 import { PlantSelect } from '../pages/PlantSelect';
 import { PlantSave } from '../pages/PlantSave';
+import { MyPlants } from '../pages/MyPlants';
 
 import colors from '../styles/colors';
 
@@ -45,6 +46,12 @@ const AppRoutes: React.FC = () => (
       name="PlantSave"
       component={PlantSave}
    />
+
+    <stackRoutes.Screen
+      name="MyPlants"
+      component={MyPlants}
+   />
+
   </stackRoutes.Navigator>
 )
 

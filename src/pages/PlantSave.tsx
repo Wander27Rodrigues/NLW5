@@ -14,13 +14,14 @@ import {SvgFromUri} from 'react-native-svg';
 import waterdrop from '../assets/waterdrop.png';
 import { Button } from '../components/Button';
 import { useRoute } from '@react-navigation/core';
-import { loadPlant, PlantProps, savePlant } from '../libs/storage';
+import { PlantProps, savePlant } from '../libs/storage';
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
 import { format, isBefore } from 'date-fns';
 
 import { color } from 'react-native-reanimated';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import { useNavigation } from '@react-navigation/native';
 
 interface Params {
     plant: PlantProps
@@ -33,6 +34,8 @@ export function PlantSave(){
 
     const route = useRoute();
     const { plant } = route.params as Params;
+
+    const navegation = useNavigation();
 
     function handleChangeTime(event: Event, dateTime: Date | undefined){
         if(Platform.OS === 'android'){
@@ -57,6 +60,14 @@ export function PlantSave(){
             await savePlant ({
                 ...plant,
                 dateTimeNotification: selectedDateTime
+            });
+
+            navegation.navigate('Confirmation',{
+                title: 'Tudo certo',
+                subtitle:'Fique tranquilo que sempre vamos te lembrar da sua plantinha!',
+                buttonTitle:'Muito Obrigado :D',
+                icon:'hug',
+                nextScreen:'Myplant',
             });
         } catch {
             Alert.alert('Não foi possivel salvar. 😥');
