@@ -14,6 +14,10 @@ export function MyPlants() {
         <View style={styles.container}>
             <Header/>
 
+            <View style={styles.spotlight}>
+                <Image source={}/>
+            </View>
+
         </View>
     )
 }
