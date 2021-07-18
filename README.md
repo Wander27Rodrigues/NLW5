@@ -25,7 +25,7 @@ Foi desenvolvido com as seguintes tecnologias:
 
 ## 🔖 Layout
 <p align="center">
-Você pode visualizar o layout do projeto através [desse link] (https://www.figma.com/file/M37M5YbYMeXX11ZFCMiBlk/PlantManager). É necessário ter conta no [Figma](https://figma.com) para acessá-lo.
+Você pode visualizar o layout do projeto através desse link(https://www.figma.com/file/M37M5YbYMeXX11ZFCMiBlk/PlantManager). É necessário ter conta no [Figma](https://figma.com) para acessá-lo.
 </p>
 
 
