@@ -10,6 +10,7 @@
 - [x] Estrutura
 - [x] Code main
 - [x] Template
+- [ ] Screen Notification
 
 
 ## 🚀 Tecnologias
