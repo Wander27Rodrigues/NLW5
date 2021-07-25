@@ -16,6 +16,7 @@ import { loadPlant, PlantProps } from "../libs/storage";
 import { formatDistance } from "date-fns";
 import pt from "date-fns/esm/locale/pt/index.js";
 import fonts from "../styles/fonts";
+import { PlantCardSecondary } from "../components/PlantCardSecondary";
 
 export function MyPlants() {
 
@@ -68,7 +69,7 @@ export function MyPlants() {
                     data={myPlants}
                     keyExtractor= {(item)=> String(item.id)}
                     renderItem={({ item }) =>(
-                        <Text>Elemento</Text>
+                        <PlantCardSecondary data={item} />
                     )}
                 />
             </View>
@@ -106,7 +107,6 @@ const styles = StyleSheet.create({
         flex: 1,
         color: colors.blue,
         paddingHorizontal: 20,
-        textAlign: 'justify'
     },
 
     plants: {
