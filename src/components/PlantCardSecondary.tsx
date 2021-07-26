@@ -7,8 +7,11 @@ import {
 import  { SvgFromUri } from 'react-native-svg';
 
 import {  RectButton, RectButtonProps } from 'react-native-gesture-handler';
+import Swipeable, {  RectButton, RectButtonProps } from 'react-native-gesture-handler/Swipeable';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import Animated from 'react-native-reanimated';
+import { Feather } from '@expo/vector-icons';
 
 // typeScript
 interface PlantProps extends RectButtonProps {
@@ -16,10 +19,26 @@ interface PlantProps extends RectButtonProps {
         name: string,
         photo: string,
         hour: string
-    }
+    };
+    handleRemove: () => void;
 }
-export const PlantCardSecondary = ({ data, ...rest} : PlantProps) => {
+export const PlantCardSecondary = ({ data, handleRemove, ...rest} : PlantProps) => {
     return(
+    <Swipeable
+        overshootRight={false}
+        renderRightActions={()=>(
+            <Animated.View>
+                <View>
+                    <RectButton
+                        style={styles.buttonRemove}
+                        onPress={handleRemove}
+                    >
+                        <Feather name="trash" size={32} color={colors.white}/>
+                    </RectButton>
+                </View>
+            </Animated.View>
+        )}
+    >
     <RectButton
             style={styles.container}
         >
@@ -41,18 +60,19 @@ export const PlantCardSecondary = ({ data, ...rest} : PlantProps) => {
 
         </View>
     </RectButton>
+    </Swipeable>
     )
 }
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
   
-    container:{
-        width: '100%',
+    container: {
+        width: "100%",
         paddingHorizontal: 10,
         paddingVertical: 25,
-        bordeRadius: 20,
+        borderRadius: 20,
         flexDirection: 'row',
-        alingItems: 'center',
+        alignItems: 'center',
         backgroundColor: colors.shape,
         marginVertical: 5,
     },

@@ -12,10 +12,11 @@ export interface PlantProps {
             times: number;
             repeat_every: string;
         },
+        hour: string,
         dateTimeNotification: Date;
 }
 
-interface StoragePlantPros {
+export interface StoragePlantPros {
     [id: string]: {
         data: PlantProps;
     }

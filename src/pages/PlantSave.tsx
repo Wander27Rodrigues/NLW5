@@ -7,6 +7,7 @@ import {
     Image,
     Platform,
     TouchableOpacity,
+    ScrollView
  } from 'react-native';
 
 import { getBottomSpace } from 'react-native-iphone-x-helper';
@@ -75,6 +76,10 @@ export function PlantSave(){
     }
 
     return(
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.container}
+        >
         <View style={styles.container}>
 
         <View style={styles.plantInfo}>
@@ -140,6 +145,7 @@ export function PlantSave(){
             />
         </View>
         </View>
+        </ScrollView>
         
     )
 }
