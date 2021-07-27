@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Notifications from 'expo-notifications';
 import { format } from 'date-fns';
 
 export interface PlantProps {
@@ -19,17 +20,52 @@ export interface PlantProps {
 export interface StoragePlantPros {
     [id: string]: {
         data: PlantProps;
+        notificationId: string;
     }
 }
 
 export async function savePlant(plant: PlantProps): Promise<void> {
     try {
+
+        //NOTIFICATION
+        const nexTime = new Date(plant.dateTimeNotification);
+        const now = new Date();
+        
+        const { times, repeat_every } = plant.frequency;
+        if(repeat_every === 'week'){
+            const interval = Math.trunc(7 / times);
+            nexTime.setDate(now.getDate() + interval);
+        }
+        else
+            nexTime.setDate(nexTime.getDate()+ 1)
+
+        //notification second
+        const seconds = Math.abs(
+            Math.ceil(now.getTime() - nexTime.getTime()) / 1000);
+
+        const notificationId = await Notifications.scheduleNotificationAsync({
+            content: {
+                title: 'Heey, 🌱',
+                body: `Está na hora de cuidar da sua ${plant.name}`,
+                sound: true,
+                priority: Notifications.AndroidNotificationPriority.HIGH,
+                data:{
+                    plant
+                },
+            },
+            trigger: {
+                seconds: seconds < 60 ? 60 : seconds,
+                repeats: true
+            }
+        });
+
         const data = await AsyncStorage.getItem('@plantmanager:plants');
         const oldPants = data ? (JSON.parse(data) as StoragePlantPros) : {};
 
         const newPlant = {
             [plant.id]: {
-                data: plant
+                data: plant,
+                notificationId
             }
         }
         await AsyncStorage.setItem('@plantmanager:plants',
@@ -39,7 +75,6 @@ export async function savePlant(plant: PlantProps): Promise<void> {
             }));
     } catch (error) {
         throw new Error('error');
-
     }
 }
 
@@ -76,6 +111,7 @@ export async function removePlant(id: string): Promise<void> {
     const data = await AsyncStorage.getItem('@plantmanager:plants');
     const plants = data ? (JSON.parse(data) as StoragePlantPros) : {};
 
+    await Notifications.cancelAllScheduledNotificationsAsync(plants[id].notificationId);
     delete plants[id];
 
     await AsyncStorage.setItem(
