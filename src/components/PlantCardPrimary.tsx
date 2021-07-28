@@ -21,18 +21,15 @@ export const PlantCardPrimary = ({ data, ...rest} : PlantProps) => {
     return(
         <RectButton
             style={styles.container}
-        >
-        
+        >        
         <SvgFromUri 
             uri={data.photo} 
             width={70} 
             height={70}  
         />
-
         <Text  style={styles.text}>
             { data.name }
         </Text>
-
         </RectButton>
     )
 }
@@ -53,6 +50,4 @@ const styles= StyleSheet.create({
         fontFamily: fonts.heading,
         marginVertical:16,
     }
-
-
 }) 

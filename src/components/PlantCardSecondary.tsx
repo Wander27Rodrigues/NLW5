@@ -110,10 +110,9 @@ const styles = StyleSheet.create({
         marginTop: 15,
         borderRadius: 20,
         justifyContent: 'center',
-        alingItems: 'center',
+        alignItems: 'center',
         position: 'relative',
         right: 20,
         paddingLeft: 15
     }
-
 }) 

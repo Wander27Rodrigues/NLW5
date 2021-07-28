@@ -7,7 +7,6 @@ import {
     FlatList,
     ActivityIndicator
  } from 'react-native';
- 
 
  import { Header } from '../components/Header';
  import { EnvironmentButton } from '../components/EnvironmentButton';
@@ -15,15 +14,10 @@ import {
  import { Load } from '../components/Load';
  import { useNavigation } from '@react-navigation/native';
  
- 
  import colors from '../styles/colors';
  import fonts from '../styles/fonts';
  import api from '../services/api';
 import { PlantProps } from '../libs/storage';
-
-
-
-
 
 interface EnvironmentProps {
     title: string;
@@ -107,9 +101,7 @@ async function fetchPlants(){
 
         },[])
 
-        useEffect(() => {
-            
-            
+        useEffect(() => {                        
             fetchPlants();    
             },[])
     
@@ -172,12 +164,8 @@ async function fetchPlants(){
                         ? <ActivityIndicator color={colors.green}/>
                         : <></>
                     }
-                    />
-                    
-
+                    />                    
             </View>
-            
-
         </View>
     )
 }
